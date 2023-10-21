@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wordBot
+    username: postgres
+    password: root
+    name: Postgres
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+bot:
+  username: "@FeelTheDifferenceBot"
+  token: "1789726660:AAGNumzHWAgyXoFPexCud3bc_ibGkVS4M3c"
