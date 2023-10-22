@@ -3,7 +3,7 @@ package ru.magenta.distancecalculator.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.magenta.distancecalculator.DTO.DistanceDTO;
-import ru.magenta.distancecalculator.DTO.RequestDTO;
+import ru.magenta.distancecalculator.DTO.RequestDistanceDTO;
 import ru.magenta.distancecalculator.service.impl.DistanceServiceImpl;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class DistanceController {
     }
 
     @PostMapping("/calculate")
-    public List<DistanceDTO> calculated(@RequestBody RequestDTO requestDTO) {
-        return distanceService.calculateDistance(requestDTO);
+    public List<DistanceDTO> calculated(@RequestBody RequestDistanceDTO requestDistanceDTO) {
+        return distanceService.calculateDistance(requestDistanceDTO);
     }
 }

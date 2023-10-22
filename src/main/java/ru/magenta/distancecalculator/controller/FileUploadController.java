@@ -1,5 +1,6 @@
 package ru.magenta.distancecalculator.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +15,9 @@ public class FileUploadController {
     // upload distance
     // upload all
 
-    @PostMapping("/uploadFile")
+    @PostMapping(value = "/uploadFile", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE})
     public String uploadFile(@RequestParam MultipartFile multipartFile) {
-
+        System.out.println(multipartFile.getResource());
         return null;
     }
 }

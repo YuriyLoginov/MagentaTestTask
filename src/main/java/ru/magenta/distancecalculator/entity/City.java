@@ -1,7 +1,6 @@
 package ru.magenta.distancecalculator.entity;
 
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.util.List;

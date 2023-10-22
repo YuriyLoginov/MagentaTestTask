@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Value
-public class RequestDTO implements Serializable {
+public class RequestDistanceDTO implements Serializable {
     List<CalculatedType> calculatedTypes;
     List<City> fromCitiesList;
     List<City> toCitiesList;

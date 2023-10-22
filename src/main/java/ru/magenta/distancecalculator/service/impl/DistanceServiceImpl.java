@@ -3,7 +3,7 @@ package ru.magenta.distancecalculator.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.magenta.distancecalculator.DTO.DistanceDTO;
-import ru.magenta.distancecalculator.DTO.RequestDTO;
+import ru.magenta.distancecalculator.DTO.RequestDistanceDTO;
 import ru.magenta.distancecalculator.entity.City;
 import ru.magenta.distancecalculator.enums.CalculatedType;
 import ru.magenta.distancecalculator.repository.DistanceRepository;
@@ -23,7 +23,7 @@ public class DistanceServiceImpl implements DistanceService {
     }
 
     @Override
-    public List<DistanceDTO> calculateDistance(RequestDTO requestDTO) {
+    public List<DistanceDTO> calculateDistance(RequestDistanceDTO requestDistanceDTO) {
 
         return null;
     }
