@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -17,10 +14,19 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "distance")
 public class Distance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @EmbeddedId
-    private Path path;
+    @ManyToOne
+    @JoinColumn(name = "fromCity")
+    private City fromCity;
+
+    @ManyToOne
+    @JoinColumn(name = "toCity")
+    private City toCity;
 
     @Column(name = "distance")
     private Long distance;
+
 }

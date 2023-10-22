@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-user
+      id: create-distance
       author: Yuriy
       changes:
         - createTable:
-            tableName: City
+            tableName: Distance
             columns:
               - column:
                   name: id

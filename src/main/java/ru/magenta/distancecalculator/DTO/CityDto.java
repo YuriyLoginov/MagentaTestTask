@@ -1,7 +1,10 @@
 package ru.magenta.distancecalculator.DTO;
 
-/**
- * DTO for {@link ru.magenta.distancecalculator.entity.City}
- */
-public class CityDto {
+import lombok.Value;
+
+import java.io.Serializable;
+@Value
+public class CityDto implements Serializable {
+    Long id;
+    String name;
 }
