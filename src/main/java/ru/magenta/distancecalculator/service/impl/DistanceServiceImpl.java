@@ -2,6 +2,7 @@ package ru.magenta.distancecalculator.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.magenta.distancecalculator.exception.DistanceNotFountException;
 import ru.magenta.distancecalculator.model.DistanceModel;
 import ru.magenta.distancecalculator.request.RequestDistance;
 import ru.magenta.distancecalculator.entity.City;
@@ -32,13 +33,14 @@ public class DistanceServiceImpl implements DistanceService {
     public DistanceModel calculateByCrowFlight(City fromCity, City toCity) {
         return new DistanceModel(fromCity.getName(), toCity.getName(), CalculatedType.CROW_FLIGHT.name(),
                 CrowFlightCalculator.calculate(toCity.getLatitude(), fromCity.getLatitude(),
-                toCity.getLongitude(), fromCity.getLongitude()));
+                        toCity.getLongitude(), fromCity.getLongitude()));
     }
 
     @Override
     public DistanceModel calculateByDistanceMatrix(City fromCity, City toCity) {
         return new DistanceModel(fromCity.getName(), toCity.getName(), CalculatedType.DISTANCE_MATRIX.name(),
-                distanceRepository.findDistanceByFromCityAndToCity(fromCity, toCity).getDistance());
+                distanceRepository.findDistanceByFromCityAndToCity(fromCity, toCity)
+                        .orElseThrow(() -> new DistanceNotFountException("Distance not found in db!")).getDistance());
     }
 
     private Set<DistanceModel> calculateTypeHandler(RequestDistance requestDistance) {
@@ -46,6 +48,7 @@ public class DistanceServiceImpl implements DistanceService {
         Set<City> fromCity = new HashSet<>(requestDistance.getFromCitiesList());
         Set<City> toCity = new HashSet<>(requestDistance.getToCitiesList());
         Set<DistanceModel> distanceModels = new HashSet<>();
+        // TODO: need rework
         if (calculatedTypes.contains(CalculatedType.ALL)) {
             distanceModels.addAll(calculateCrowFlightHandler(fromCity, toCity));
             distanceModels.addAll(calculateDistanceMatrixHandler(fromCity, toCity));
@@ -61,14 +64,14 @@ public class DistanceServiceImpl implements DistanceService {
         } else if (calculatedTypes.contains(CalculatedType.DISTANCE_MATRIX)) {
             return calculateDistanceMatrixHandler(fromCity, toCity);
         }
-        return null;
+        return distanceModels;
     }
 
     private Set<DistanceModel> calculateDistanceMatrixHandler(Set<City> fromCity, Set<City> toCity) {
         return fromCity.stream()
                 .flatMap(from -> toCity.stream()
                         .map(to -> calculateByDistanceMatrix(from, to)))
-                .collect(Collectors.toSet());
+                        .collect(Collectors.toSet());
     }
 
     private Set<DistanceModel> calculateCrowFlightHandler(Set<City> fromCity, Set<City> toCity) {

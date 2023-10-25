@@ -3,8 +3,8 @@ package ru.magenta.distancecalculator.service.impl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.magenta.distancecalculator.entity.City;
 import ru.magenta.distancecalculator.entity.Distance;
+import ru.magenta.distancecalculator.exception.CityNotFoundException;
 import ru.magenta.distancecalculator.repository.CityRepository;
 import ru.magenta.distancecalculator.repository.DistanceRepository;
 import ru.magenta.distancecalculator.request.RequestFileXML;
@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,12 +35,32 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public ResponseEntity<?> saveRequestToDB(MultipartFile multipartFile) {
+        saveFileInPackage(multipartFile);
+        RequestFileXML requestFileXML = unmarshallingFile();
+
+        cityRepository.saveAll(requestFileXML.getCities());
+        distanceRepository.saveAll(requestFileXML.getDistances()
+                .stream()
+                .map(dist -> new Distance(
+                        cityRepository.findCityById(dist.getFromCity())
+                                .orElseThrow(() -> new CityNotFoundException("Not found City in DB!")),
+                        cityRepository.findCityById(dist.getToCity())
+                                .orElseThrow(() -> new CityNotFoundException("Not found City in DB!")),
+                        dist.getDistance()
+                ))
+                .collect(Collectors.toList()));
+        return ResponseEntity.ok("200");
+    }
+
+    private void saveFileInPackage(MultipartFile multipartFile) {
         try (OutputStream os = new FileOutputStream(file)) {
             os.write(multipartFile.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private RequestFileXML unmarshallingFile() {
         RequestFileXML requestFileXML;
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(RequestFileXML.class);
@@ -50,17 +69,6 @@ public class FileServiceImpl implements FileService {
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
-
-        cityRepository.saveAll(requestFileXML.getCities());
-        distanceRepository.saveAll(requestFileXML.getDistances()
-                        .stream()
-                        .map(dist -> new Distance(
-                                cityRepository.findCityById(dist.getFromCity()),
-                                cityRepository.findCityById(dist.getToCity()),
-                                dist.getDistance()
-                        ))
-                        .collect(Collectors.toList()));
-        return ResponseEntity.ok("200");
+        return requestFileXML;
     }
-
 }

@@ -6,7 +6,6 @@ import ru.magenta.distancecalculator.model.DistanceModel;
 import ru.magenta.distancecalculator.request.RequestDistance;
 import ru.magenta.distancecalculator.service.impl.DistanceServiceImpl;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
