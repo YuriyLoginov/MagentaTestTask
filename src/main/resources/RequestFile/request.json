@@ -1,0 +1,31 @@
+{
+  "calculatedTypes" : ["CROW_FLIGHT"],
+  "fromCitiesList" : [
+    {
+      "id": 1,
+      "latitude": 44.8783715,
+      "longitude": 39.190172,
+      "name": "Адыгейск"
+    },
+    {
+      "id": 2,
+      "latitude": 44.6098268,
+      "longitude": 40.1006527,
+      "name": "Майкоп"
+    }
+  ],
+  "toCitiesList": [
+    {
+      "id": 1,
+      "latitude": 44.8783715,
+      "longitude": 39.190172,
+      "name": "Адыгейск"
+    },
+    {
+      "id": 2,
+      "latitude": 44.6098268,
+      "longitude": 40.1006527,
+      "name": "Майкоп"
+    }
+  ]
+}
