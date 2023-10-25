@@ -2,6 +2,10 @@ databaseChangeLog:
   - changeSet:
       id: create-distance
       author: Yuriy
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: Distance
       changes:
         - createTable:
             tableName: Distance
@@ -13,3 +17,20 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+              - column:
+                  name: distance
+                  type: double
+              - column:
+                  name: from_city
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_from_city
+                    referencedTableName: city
+                    referencedColumnNames: id
+              - column:
+                  name: to_city
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_to_city
+                    referencedTableName: city
+                    referencedColumnNames: id
