@@ -18,13 +18,19 @@ public class City {
     @Column(name = "name")
     private String name;
     @Column(name = "latitude")
-    private Integer latitude;
+    private Double latitude;
     @Column(name = "longitude")
-    private Integer longitude;
+    private Double longitude;
 
     @OneToMany(mappedBy = "toCity")
     private List<Distance> toDistance;
 
     @OneToMany(mappedBy = "fromCity")
     private List<Distance> fromDistance;
+
+    public City(String name, Double latitude, Double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }

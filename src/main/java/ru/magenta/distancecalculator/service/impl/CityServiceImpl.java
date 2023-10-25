@@ -2,7 +2,7 @@ package ru.magenta.distancecalculator.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.magenta.distancecalculator.DTO.CityDto;
+import ru.magenta.distancecalculator.model.CityModel;
 import ru.magenta.distancecalculator.repository.CityRepository;
 import ru.magenta.distancecalculator.service.CityService;
 
@@ -20,10 +20,10 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityDto> getAllCities() {
+    public List<CityModel> getAllCities() {
         return cityRepository.findAll()
                 .stream()
-                .map(city -> new CityDto(city.getId(), city.getName()))
+                .map(city -> new CityModel(city.getId(), city.getName()))
                 .collect(Collectors.toList());
     }
 }

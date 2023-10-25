@@ -2,6 +2,10 @@ databaseChangeLog:
   - changeSet:
       id: create-user
       author: Yuriy
+      preConditions:
+        - not:
+            - tableExists:
+                tableName: City
       changes:
         - createTable:
             tableName: City
@@ -13,3 +17,12 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
+              - column:
+                  name: latitude
+                  type: double
+              - column:
+                  name: longitude
+                  type: double
+              - column:
+                  name: name
+                  type: varchar(25)

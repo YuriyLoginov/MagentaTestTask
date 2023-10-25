@@ -1,13 +1,14 @@
 package ru.magenta.distancecalculator.service;
 
-import ru.magenta.distancecalculator.DTO.DistanceDTO;
-import ru.magenta.distancecalculator.DTO.RequestDistanceDTO;
+import ru.magenta.distancecalculator.exception.DistanceNotFountException;
+import ru.magenta.distancecalculator.model.DistanceModel;
+import ru.magenta.distancecalculator.request.RequestDistance;
 import ru.magenta.distancecalculator.entity.City;
 
-import java.util.List;
+import java.util.Set;
 
 public interface DistanceService {
-    List<DistanceDTO> calculateDistance(RequestDistanceDTO requestDistanceDTO);
-    DistanceDTO calculateByCrowFlight(City fromCity, City toCiti);
-    DistanceDTO calculateByDistanceMatrix(City fromCity, City toCity);
+    Set<DistanceModel> calculateDistance(RequestDistance requestDistance);
+    DistanceModel calculateByCrowFlight(City fromCity, City toCiti);
+    DistanceModel calculateByDistanceMatrix(City fromCity, City toCity) throws DistanceNotFountException;
 }

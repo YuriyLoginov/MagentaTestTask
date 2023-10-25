@@ -1,9 +1,6 @@
 package ru.magenta.distancecalculator.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -27,6 +24,11 @@ public class Distance {
     private City toCity;
 
     @Column(name = "distance")
-    private Long distance;
+    private Double distance;
 
+    public Distance(City fromCity, City toCity, Double distance) {
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+        this.distance = distance;
+    }
 }
